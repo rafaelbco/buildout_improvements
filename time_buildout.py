@@ -38,7 +38,7 @@ def setup_logging():
     u"""Setup logging for use in CLI scripts."""
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
-    handler = logging.StreamHandler(sys.stderr)
+    handler = logging.StreamHandler(sys.stdout)
     formatter = logging.Formatter(
         '%(levelname)-7s [%(asctime)s] %(name)s: %(message)s',
         '%H:%M:%S'
