@@ -2,12 +2,13 @@
 """Time buildout execution.
 
 Usage:
-  time_buildout [options] <buildout_path> [-- <buildout_option>...]
+  time_buildout [options] <buildout_path>
 
 Options:
   -h, --help                Show help.
   -c, --count=<n>           Run N times. [default: 10]
   -v, --virtualenv=<path>   Path to virtualenv script. [default: virtualenv]
+  -d, --develop=<path>      Insert development egg.
 """
 from docopt import docopt
 import contextlib
@@ -110,7 +111,12 @@ def main():
 
     count = int(arguments['--count'])
     virtualenv_path = arguments['--virtualenv']
-    buildout_options = arguments['<buildout_option>']
+    development_egg = arguments['--develop'] or ''
+
+    buildout_options = []
+
+    if development_egg:
+        buildout_options.append('buildout:develop={}'.format(development_egg))
 
     def run_the_buildout(name):
         print 'Buildout run: {}'.format(name)
