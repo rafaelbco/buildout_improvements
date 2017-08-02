@@ -2,7 +2,7 @@
 """Time buildout execution.
 
 Usage:
-  time_buildout [options] <buildout_path>
+  time_buildout [options] <buildout_path> [-- <buildout_option>...]
 
 Options:
   -h, --help                Show help.
@@ -105,15 +105,11 @@ def main():
     setup_logging()
 
     arguments = docopt(__doc__)
-    print arguments
-
     buildout_path = os.path.abspath(arguments['<buildout_path>'])
-
     count = int(arguments['--count'])
     virtualenv_path = arguments['--virtualenv']
     development_egg = arguments['--develop'] or ''
-
-    buildout_options = []
+    buildout_options = arguments['<buildout_option>']
 
     if development_egg:
         buildout_options.append('buildout:develop={}'.format(development_egg))
