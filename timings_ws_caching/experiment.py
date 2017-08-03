@@ -1,20 +1,18 @@
 # coding=utf8
 
 from functools import partial
-import contextlib
 import logging
 import os
 import sh
-import shutil
 import sys
-import tempfile
-import time
+
 
 # Experiment parameters.
 REPETITIONS = 5
 MAX_EXTRA_INSTANCES = 9
 
 # Paths.
+BUILDOUTS_PATH = '..'
 VIRTUALENV_PATH = '/home/rafaelbc/trt3/trt3plone/python_buildout/python-2.7/bin/virtualenv'
 ZC_RECIPE_EGG_PATH = '/home/rafaelbc/data/checkouts/git/buildout/zc.recipe.egg_'
 ZC_RECIPE_EGG_PUBLISHED_REV = '1c8a5ea8f206137b8708053d77b55ba0cf1f07b1'
@@ -37,11 +35,11 @@ def setup_logging():
     logging.getLogger('requests').setLevel(logging.WARNING)
 
 
-def time_buildout(buildout_path, options=()):
+def time_buildout(buildout_name, options=()):
     python_cmd = sh.Command('bin/python')
     args = [
         'time_buildout.py',
-        buildout_path,
+        os.path.join(BUILDOUTS_PATH, buildout_name),
         '--count={}'.format(REPETITIONS),
         '--virtualenv={}'.format(VIRTUALENV_PATH),
         '--develop={}'.format(ZC_RECIPE_EGG_PATH),
