@@ -10,11 +10,17 @@ import sys
 import tempfile
 import time
 
-COUNT = 1
-LINE = '-'*80
-VIRTUALENV_PATH = '/home/rafaelbc//trt3/trt3plone/python_buildout/python-2.7/bin/virtualenv'
+# Experiment parameters.
+REPETITIONS = 5
+MAX_EXTRA_INSTANCES = 9
+
+# Paths.
+VIRTUALENV_PATH = '/home/rafaelbc/trt3/trt3plone/python_buildout/python-2.7/bin/virtualenv'
 ZC_RECIPE_EGG_PATH = '/home/rafaelbc/data/checkouts/git/buildout/zc.recipe.egg_'
 ZC_RECIPE_EGG_PUBLISHED_REV = '1c8a5ea8f206137b8708053d77b55ba0cf1f07b1'
+
+# Other constants.
+LINE = '-'*80
 
 
 def setup_logging():
@@ -31,42 +37,12 @@ def setup_logging():
     logging.getLogger('requests').setLevel(logging.WARNING)
 
 
-@contextlib.contextmanager
-def cd(newdir, cleanup=lambda: True):
-    prevdir = os.getcwd()
-    os.chdir(os.path.expanduser(newdir))
-    try:
-        yield
-    finally:
-        os.chdir(prevdir)
-        cleanup()
-
-
-@contextlib.contextmanager
-def tempdir(prefix=''):
-    dirpath = tempfile.mkdtemp(prefix=prefix)
-
-    def cleanup():
-        shutil.rmtree(dirpath)
-
-    with cd(dirpath, cleanup):
-        yield dirpath
-
-
-@contextlib.contextmanager
-def timer(name):
-    start = time.time()
-    yield
-    elapsed = time.time() - start
-    print('[{}] finished in {} s'.format(name, elapsed))
-
-
 def time_buildout(buildout_path, options=()):
     python_cmd = sh.Command('bin/python')
     args = [
         'time_buildout.py',
         buildout_path,
-        '--count={}'.format(COUNT),
+        '--count={}'.format(REPETITIONS),
         '--virtualenv={}'.format(VIRTUALENV_PATH),
         '--develop={}'.format(ZC_RECIPE_EGG_PATH),
     ]
@@ -77,7 +53,7 @@ def time_buildout(buildout_path, options=()):
 
 
 def checkout_zc_recipe_egg(rev):
-    with cd(ZC_RECIPE_EGG_PATH):
+    with sh.pushd(ZC_RECIPE_EGG_PATH):
         sh.git.checkout(rev)
 
 
@@ -116,8 +92,10 @@ def main():
     logger.info('Begin.')
 
     test_simple_buildout()
-    test_plone_deploy_buildout(1)
-    test_plone_deploy_buildout(2)
+    print LINE
+    for i in xrange(0, MAX_EXTRA_INSTANCES + 1):
+        test_plone_deploy_buildout(i)
+        print LINE
 
     logger.info('End.')
 

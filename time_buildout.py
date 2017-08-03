@@ -117,7 +117,7 @@ def main():
     def run_the_buildout(name):
         print 'Buildout run: {}'.format(name)
         duration = run_buildout(buildout_path, virtualenv_path, buildout_options)
-        print '-' * 80
+        print
         return duration
 
     run_the_buildout('Warm up')
