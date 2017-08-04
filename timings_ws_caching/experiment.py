@@ -61,9 +61,11 @@ def test_buildout(name, time_buildout_func):
     logger.info('Using zc.recipe.egg version: published on PyPI')
     checkout_zc_recipe_egg(ZC_RECIPE_EGG_PUBLISHED_REV)
     time_buildout_func()
+    print
     logger.info('Using zc.recipe.egg version: pull request')
     checkout_zc_recipe_egg('master')
     time_buildout_func()
+    print
 
 
 def test_simple_buildout():

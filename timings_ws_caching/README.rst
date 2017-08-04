@@ -74,9 +74,9 @@ This pseudo-code explains ``experiment.py``:
 Results
 -------
 
-The ``experiment.log`` file contains the output of ``experiment.py``. The times were extracted
-from the log and put on a `Google Spreadsheet`_, with charts. This spreadsheet was exported to
-other formats for archiving, in the ``spreadsheets`` directory.
+The ``output/experiment.log`` file contains the output of ``experiment.py``. The times were
+extracted from the log and put on a `Google Spreadsheet`_, with charts. This spreadsheet was
+exported to other formats for archiving.
 
 
 Analysis
@@ -107,6 +107,6 @@ This indicates that:
 
 .. References:
 
-.. _`Google Spreadsheet`: http://google.com
+.. _`Google Spreadsheet`: https://docs.google.com/spreadsheets/d/1XivBiQgzJEnGFm0eqbkfyjI0jDkR11JdA6O3z69iGb8/edit?usp=sharing
 
 
