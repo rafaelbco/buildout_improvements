@@ -35,8 +35,8 @@ It allows for choosing which version of ``zc.recipe.egg`` to use by passing the
 version, to minimize timing differences.
 
 
-Experiment
-----------
+Experiment description
+----------------------
 
 Following the strategy above the ``experiment.py`` was written, which performs the experiment
 with the following parameters:
@@ -77,6 +77,7 @@ Results
 The ``experiment.log`` file contains the output of ``experiment.py``. The times were extracted
 from the log and put on a `Google Spreadsheet`_, with charts. This spreadsheet was exported to
 other formats for archiving, in the ``spreadsheets`` directory.
+
 
 Analysis
 --------
