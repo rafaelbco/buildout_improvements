@@ -25,7 +25,11 @@ environment. The procedure is:
 
 Then the average elapsed time for the last step (``bin/buildout``) is computed. This is done two
 times: using the latest published version of ``zc.recipe.egg`` (2.0.3) and using the the pull
-request. From now on we'll refer to these versions as "old" and "new", respectively.
+request code.
+
+.. NOTE::
+   From now on we'll refer to the last published version of ``zc.recipe.egg`` as _old_ and the
+   version from the pull request as _new_.
 
 For the ``plone_deploy_buildout`` we do multiple measures, varying the number of Zope instances.
 
@@ -90,9 +94,10 @@ Execution time difference (%)
     ``100*((new_execution_time - old_execution_time)/old_execution_time)``
 
 For the ``simple_buildout`` and the ``plone_deploy_buildout`` with no extra instances, the new
-version performance was worse, with execution time differences of XXX and YYY respectively.
+version performance was almost unchanged compared to the old, with execution execution time
+differences of -2.55% and 2.28% respectively.
 
-This indicates there's an overhead in order to cache the working sets, which is expected.
+This indicates the overhead in order to cache the working sets is small.
 
 For the other cases, ie., ``plone_deploy_buildout`` with multiple instances, there was a linear
 increase in speedup, directly proportional to the number of instances.
